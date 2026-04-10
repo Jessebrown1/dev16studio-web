@@ -1,0 +1,170 @@
+/* ===== NAVBAR WRAPPER ===== */
+.navbar {
+  position: fixed;
+  top: -20px;
+  width: 100%;
+  z-index: 1000;
+
+  /* ✅ CENTER CONTENT */
+  display: flex;
+  justify-content: center;
+
+  padding: 20px 0;
+  transition: all 0.4s ease;
+
+  animation: fadeDown 0.8s ease;
+}
+
+/* ===== INNER CONTAINER (GLASS CARD) ===== */
+.nav-container {
+  width: 90%;
+  max-width: 1200px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 30px;
+  border-radius: 20px;
+
+  /* Glass effect */
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  transition: all 0.4s ease;
+
+  /* ✅ subtle floating feel */
+  animation: floatNav 6s ease-in-out infinite;
+}
+
+/* ===== SCROLLED STATE ===== */
+.navbar.scrolled .nav-container {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+
+  /* ✅ tighten + premium feel */
+  transform: scale(0.97);
+}
+
+/* ===== LOGO ===== */
+.logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+/* ===== NAV LINKS CONTAINER ===== */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 40px; /* ✅ more breathing space */
+  list-style: none;
+}
+
+/* ===== INDIVIDUAL LINKS ===== */
+.nav-links a {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.95rem;
+
+  padding: 6px 14px; /* ✅ gives space inside */
+  border-radius: 999px;
+
+  transition: all 0.3s ease;
+}
+
+/* ===== LIQUID GLASS HOVER ===== */
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08);
+
+  transform: translateY(-1px);
+}
+
+/* ===== SOFT GLOW UNDERLINE ===== */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 1px;
+
+  background: linear-gradient(90deg, transparent, #C9A24D, transparent);
+  transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+  width: 70%;
+}
+
+/* ===== CTA BUTTON ===== */
+.nav-cta {
+  padding: 8px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: white;
+  font-size: 0.9rem;
+
+  background: linear-gradient(135deg, #C9A24D, #f5d27a);
+  box-shadow: 0 0 20px rgba(201, 162, 77, 0.4);
+
+  transition: all 0.3s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(201, 162, 77, 0.6);
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatNav {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(4px); }
+  100% { transform: translateY(0px); }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 0;
+  }
+
+  .nav-container {
+    width: 95%;
+    padding: 10px 20px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta {
+    padding: 6px 14px;
+    font-size: 0.8rem;
+  }
+}
