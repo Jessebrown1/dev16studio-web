@@ -1,7 +1,7 @@
 /* ===== NAVBAR WRAPPER ===== */
 .navbar {
   position: fixed;
-  top: -20px;
+  top: -14px;
   width: 100%;
   z-index: 1000;
 

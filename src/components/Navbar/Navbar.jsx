@@ -22,7 +22,7 @@ export default function Navbar() {
         <ul className="nav-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#process">How It Works</a></li>
+          <li><a href="#howitworks">How It Works</a></li>
           <li><a href="#portfolio">Projects</a></li>
           <li><a href="#testimonials">Testimonials</a></li>
         </ul>

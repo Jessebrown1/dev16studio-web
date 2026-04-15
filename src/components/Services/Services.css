@@ -1,0 +1,220 @@
+.services-section {
+  background: #0a0a0a;
+  color: #fff;
+  padding: 120px 20px;
+}
+
+.services-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+.services-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.services-header h2 {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+
+.services-header p {
+  margin-top: 15px;
+  color: #999;
+  font-size: 18px;
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+/* Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+/* Card */
+.service-card {
+  position: relative;
+  padding: 45px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-12px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Mouse glow effect */
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    250px circle at var(--x) var(--y),
+    rgba(255, 255, 255, 0.12),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.service-card:hover .card-overlay {
+  opacity: 1;
+}
+
+/* Content */
+.card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.icon {
+  font-size: 26px;
+  margin-bottom: 18px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.service-card h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.service-card p {
+  color: #aaa;
+  line-height: 1.6;
+}
+
+/* Bottom line */
+.card-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: #fff;
+  transition: width 0.4s ease;
+}
+
+.service-card:hover .card-line {
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .services-header h2 {
+    font-size: 34px;
+  }
+}
+
+
+
+/* ================= PRICING ================= */
+
+.pricing-section {
+  margin-top: 120px;
+  text-align: center;
+}
+
+.pricing-title {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Card */
+.pricing-card {
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.4s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(255,255,255,0.2);
+}
+
+/* Highlight middle plan */
+.pricing-card.featured {
+  border-color: rgba(255,255,255,0.3);
+  transform: scale(1.05);
+}
+
+/* Price */
+.price {
+  font-size: 34px;
+  margin: 15px 0;
+}
+
+/* CTA button */
+.cta-btn {
+  margin-top: 15px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Primary CTA */
+.cta-btn.primary {
+  background: #fff;
+  color: #000;
+}
+
+.cta-btn.primary:hover {
+  opacity: 0.8;
+}
+
+/* ================= MAIN CTA ================= */
+
+.main-cta {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.main-cta h3 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.main-cta p {
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pricing-card.featured {
+    transform: none;
+  }
+}

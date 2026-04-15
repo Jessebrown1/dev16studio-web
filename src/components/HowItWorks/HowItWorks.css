@@ -1,0 +1,189 @@
+/* =========================
+   PREMIUM HOW IT WORKS
+   Apple / Tesla Inspired
+========================= */
+
+.how {
+  background: radial-gradient(circle at top, #0a0a0a 0%, #000 60%);
+  color: white;
+  padding: 160px 20px;
+  overflow: hidden;
+}
+
+/* Container */
+.how-container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.how-header {
+  text-align: center;
+  margin-bottom: 120px;
+}
+
+.how-header h2 {
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -1px;
+
+  background: linear-gradient(90deg, #ffffff, #b3b3b3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.how-header p {
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* =========================
+   STEPS LAYOUT
+========================= */
+
+.how-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 90px;
+  position: relative;
+}
+
+/* subtle center line (premium feel) */
+.how-steps::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: translateX(-50%);
+}
+
+/* =========================
+   STEP CARD
+========================= */
+
+.step {
+  text-align: center;
+  max-width: 650px;
+  margin: auto;
+
+  padding: 40px 30px;
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+/* subtle hover lift (luxury feel) */
+.step:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 200, 0, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* =========================
+   NUMBER
+========================= */
+
+.step-number {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 800;
+
+  background: linear-gradient(90deg, #f97316, #facc15);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  display: block;
+  margin-bottom: 15px;
+
+  letter-spacing: -2px;
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.step h3 {
+  font-size: 1.9rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* =========================
+   TEXT
+========================= */
+
+.step p {
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.7;
+  font-size: 1rem;
+  max-width: 500px;
+  margin: auto;
+}
+
+/* =========================
+   DIVIDER DOT (premium detail)
+========================= */
+
+.step::after {
+  content: "";
+  position: absolute;
+  bottom: -45px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-50%);
+}
+
+.step:last-child::after {
+  display: none;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .how {
+    padding: 120px 16px;
+  }
+
+  .how-header {
+    margin-bottom: 80px;
+  }
+
+  .step {
+    padding: 30px 20px;
+  }
+
+  .step h3 {
+    font-size: 1.4rem;
+  }
+
+  .step p {
+    font-size: 0.95rem;
+  }
+}
