@@ -1,6 +1,11 @@
 import React from "react";
 import "./Portfolio.css";
 import { motion } from "framer-motion";
+import rest from "../../assets/rest.jpg";
+import art from "../../assets/art.jpg";
+import barber from"../../assets/barber.jpg";
+import auto from "../../assets/auto.jpg";
+import non from "../../assets/non.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -22,24 +27,29 @@ const stagger = {
 
 const projects = [
   {
-    title: "E-commerce Website",
-    desc: "Modern online store with smooth UI and checkout.",
-    image: "https://via.placeholder.com/600x400",
+    title: "barber shop Website",
+    desc: "Modern online website with smooth UI and a booking system.",
+    image: barber,
   },
   {
     title: "Restaurant Website",
     desc: "Clean and responsive restaurant landing page.",
-    image: "https://via.placeholder.com/600x400",
+    image: rest,
   },
   {
     title: "Business Landing Page",
     desc: "High-converting landing page for a brand.",
-    image: "https://via.placeholder.com/600x400",
+    image: art,
   },
   {
-    title: "Portfolio Website",
+    title: "Autoshop Website",
     desc: "Personal brand website with modern UI.",
-    image: "https://via.placeholder.com/600x400",
+    image: auto,
+  },
+  {
+    title: "Non-Governmental Organizations Website",
+    desc: "Personal brand website with modern UI.",
+    image: non,
   },
 ];
 
