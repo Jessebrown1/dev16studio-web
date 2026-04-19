@@ -30,6 +30,7 @@ const projects = [
     title: "barber shop Website",
     desc: "Modern online website with smooth UI and a booking system.",
     image: barber,
+    link: "https://barber-shop-henna.vercel.app/"
   },
   {
     title: "Restaurant Website",
@@ -86,7 +87,13 @@ const Portfolio = () => {
                 <img src={project.image} alt={project.title} />
 
                 <div className="overlay">
-                  <button>View Project</button>
+                  <a
+  href={project.link}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <button>View Project</button>
+</a>
                 </div>
               </div>
 

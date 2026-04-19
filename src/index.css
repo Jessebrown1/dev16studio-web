@@ -6,7 +6,7 @@ html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  height: 100%;
+
   background: radial-gradient(circle at center, #ff7a00, #0f0a07);
 
   /* Hide scrollbar but allow scroll */
@@ -17,10 +17,9 @@ html, body {
   display: none;
 }
 
-
+/* Main wrapper */
 .main-container {
   min-height: 100dvh;
   padding-top: env(safe-area-inset-top);
-  padding-bottom: 0;
   box-sizing: border-box;
 }
