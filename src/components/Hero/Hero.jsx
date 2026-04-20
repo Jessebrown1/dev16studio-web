@@ -113,10 +113,25 @@ const Hero = () => {
   <p className="hero-description">
     We craft visually stunning websites that not only look amazing but turn visitors into loyal customers.
   </p>
-  <div className="hero-buttons">
-    <button className="btn-primary">Start Your Project</button>
-    <button className="btn-secondary">See Our Work</button>
-  </div>
+<div className="hero-buttons">
+  <button
+    className="btn-primary"
+    onClick={() => {
+      document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+    }}
+  >
+    Start Your Project
+  </button>
+
+  <button
+    className="btn-secondary"
+    onClick={() => {
+      document.getElementById("portfolio").scrollIntoView({ behavior: "smooth" });
+    }}
+  >
+    See Our Work
+  </button>
+</div>
 </div>
     </div>
 

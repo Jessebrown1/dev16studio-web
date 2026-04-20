@@ -6,6 +6,10 @@ import art from "../../assets/art.jpg";
 import barber from"../../assets/barber.jpg";
 import auto from "../../assets/auto.jpg";
 import non from "../../assets/non.jpg";
+import spoon from "../../assets/spoon.jpg";
+import estate from "../../assets/estate.jpg";
+import kim from "../../assets/kim.jpg";
+import news from "../../assets/news.jpg";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -24,36 +28,56 @@ const stagger = {
     },
   },
 };
-
 const projects = [
   {
-    title: "barber shop Website",
-    desc: "Modern online website with smooth UI and a booking system.",
+    title: "Barbershop Website That Books Clients 24/7",
+    desc: "Turn visitors into paying customers with a smooth booking system and premium design.",
     image: barber,
     link: "https://barber-shop-henna.vercel.app/"
   },
   {
-    title: "Restaurant Website",
-    desc: "Clean and responsive restaurant landing page.",
+    title: "Restaurant Website That Drives Orders",
+    desc: "A mouth-watering, mobile-first design that keeps customers engaged and ready to order.",
     image: rest,
+    link: "https://foodapp-phi-azure.vercel.app/"
   },
   {
-    title: "Business Landing Page",
-    desc: "High-converting landing page for a brand.",
+    title: "Landing Page Built to Convert",
+    desc: "Designed to capture attention instantly and turn clicks into real business results.",
     image: art,
+    link: "https://designer-ems1.vercel.app/"  
   },
   {
-    title: "Autoshop Website",
-    desc: "Personal brand website with modern UI.",
+    title: "Auto Business Website That Builds Trust",
+    desc: "Professional design that positions your brand as reliable and attracts serious clients.",
     image: auto,
+    link: "https://ghautoshopx.vercel.app/"
   },
   {
-    title: "Non-Governmental Organizations Website",
-    desc: "Personal brand website with modern UI.",
-    image: non,
+    title: "Restaurant Experience That Sells Your Brand",
+    desc: "High-end visuals and smart layout that make customers choose you instantly.",
+    image: spoon,
+    link: "https://goldenspoon-chi.vercel.app/"  
+  },
+  {
+    title: "Real Estate Website That Generates Leads",
+    desc: "Clean, modern platform built to showcase properties and bring in serious buyers.",
+    image: estate,
+    link: "https://casaz-estate-em6l.vercel.app/"  
+  },
+  {
+    title: "Business Website That Elevates Your Brand",
+    desc: "Stand out online with a premium look that builds trust and attracts high-value clients.",
+    image: kim,
+    link: "https://kim-s-royal-bloom-dag7.vercel.app/"  
+  },
+  {
+    title: "Tech Blog Built for Growth",
+    desc: "Fast, modern platform designed to keep readers engaged and coming back.",
+    image: news,
+    link: "https://tech-blog-omega-five.vercel.app/"  
   },
 ];
-
 const Portfolio = () => {
   return (
     <section className="portfolio">
