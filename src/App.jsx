@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
 import Services from "./components/Services/Services";
@@ -7,52 +8,71 @@ import Contact from "./components/Contact/Contact";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
 import Testimonials from "./components/Testimonials/Testimonials";
 import ScrollRocket from "./components/ScrollRocket/ScrollRocket";
+
+import Loader from "./components/Loader/Loader";
+import ScrollSystem from "./components/ScrollSystem/ScrollSystem";
+
 import "./index.css";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="main-container">
 
-      {/* Navbar */}
-      <Navbar />
+      {/* 🚀 LOADER (BOOT SCREEN) */}
+      {loading && (
+        <Loader onFinish={() => setLoading(false)} />
+      )}
 
-      {/* ✅ Scroll Container */}
-      <div className="scroll-container">
+      {/* MAIN APP (after loading) */}
+      {!loading && (
+        <>
+          {/* 📊 SCROLL PROGRESS SYSTEM */}
+          <ScrollSystem />
 
-        {/* Hero */}
-        <section id="home" className="snap-section">
-          <Hero />
-        </section>
+          {/* Navbar */}
+          <Navbar />
 
-        {/* Services */}
-        <section id="services" className="snap-section">
-          <Services />
-        </section>
+          {/* Scroll Container */}
+          <div className="scroll-container">
 
+            {/* Hero */}
+            <section id="home" className="snap-section">
+              <Hero />
+            </section>
 
-        <section id="HowItWorks" className="snap-section">
-          <HowItWorks />
-        </section>
+            {/* Services */}
+            <section id="services" className="snap-section">
+              <Services />
+            </section>
 
-        {/* Portfolio */}
-        <section id="portfolio" className="snap-section">
-          <Portfolio />
-        </section>
+            {/* How It Works */}
+            <section id="HowItWorks" className="snap-section">
+              <HowItWorks />
+            </section>
 
-        
-        <section id="testimonials" className="snap-section">
-          <Testimonials />
-        </section>
+            {/* Portfolio */}
+            <section id="portfolio" className="snap-section">
+              <Portfolio />
+            </section>
 
-        {/* Contact */}
-        <section id="contact" className="snap-section">
-          <Contact />
-        </section>
+            {/* Testimonials */}
+            <section id="testimonials" className="snap-section">
+              <Testimonials />
+            </section>
 
-      </div>
+            {/* Contact */}
+            <section id="contact" className="snap-section">
+              <Contact />
+            </section>
 
-      {/* Scroll Rocket */}
-      <ScrollRocket />
+          </div>
+
+          {/* 🚀 Rocket Scroll Button */}
+          <ScrollRocket />
+        </>
+      )}
 
     </div>
   );
