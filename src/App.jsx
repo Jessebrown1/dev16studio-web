@@ -6,6 +6,7 @@ import Portfolio from "./components/Portfolio/Portfolio";
 import Contact from "./components/Contact/Contact";
 import HowItWorks from "./components/HowItWorks/HowItWorks";
 import Testimonials from "./components/Testimonials/Testimonials";
+import ScrollRocket from "./components/ScrollRocket/ScrollRocket";
 import "./index.css";
 
 function App() {
@@ -49,6 +50,9 @@ function App() {
         </section>
 
       </div>
+
+      {/* Scroll Rocket */}
+      <ScrollRocket />
 
     </div>
   );

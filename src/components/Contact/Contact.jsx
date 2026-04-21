@@ -49,9 +49,7 @@ const Contact = () => {
 
         </div>
 
-        <p className="contact-note">
-          ⚡ Usually responds within minutes
-        </p>
+
       </motion.div>
     </section>
   );
