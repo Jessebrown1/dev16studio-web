@@ -1,15 +1,25 @@
 import { useEffect, useState } from "react";
 import "./Loader.css";
 
+const logs = [
+  "Booting Dev16 OS...",
+  "Loading assets...",
+  "Initializing shaders...",
+  "Connecting modules...",
+  "Optimizing UI engine...",
+  "Starting experience..."
+];
+
 export default function Loader({ onFinish }) {
   const [progress, setProgress] = useState(0);
+  const [logIndex, setLogIndex] = useState(0);
 
   useEffect(() => {
     let interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(onFinish, 400);
+          setTimeout(onFinish, 600);
           return 100;
         }
         return prev + 2;
@@ -19,15 +29,35 @@ export default function Loader({ onFinish }) {
     return () => clearInterval(interval);
   }, []);
 
+  // terminal logs effect
+  useEffect(() => {
+    if (logIndex < logs.length - 1) {
+      const t = setTimeout(() => {
+        setLogIndex(logIndex + 1);
+      }, 700);
+
+      return () => clearTimeout(t);
+    }
+  }, [logIndex]);
+
   return (
     <div className="loader-screen">
 
-      {/* 🔥 LOGO */}
+      {/* LOGO */}
       <div className="loader-logo">
         <img src="/dev16.png" alt="Dev16" />
       </div>
 
-      {/* BRAND TEXT */}
+      {/* TERMINAL LOGS */}
+      <div className="loader-logs">
+        {logs.slice(0, logIndex + 1).map((log, i) => (
+          <div key={i} className="log-line">
+            &gt; {log}
+          </div>
+        ))}
+      </div>
+
+      {/* BRAND */}
       <div className="loader-brand">Dev16 OS</div>
 
       {/* PROGRESS BAR */}
@@ -38,9 +68,8 @@ export default function Loader({ onFinish }) {
         />
       </div>
 
-      {/* TEXT */}
       <div className="loader-text">
-        Initializing experience... {progress}%
+        Initializing... {progress}%
       </div>
     </div>
   );

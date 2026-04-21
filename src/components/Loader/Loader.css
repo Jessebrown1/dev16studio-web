@@ -39,3 +39,46 @@
 
 
 
+.loader-logs {
+  margin-top: 10px;
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.7);
+  text-align: left;
+  max-width: 300px;
+  min-height: 80px;
+}
+
+.log-line {
+  opacity: 0;
+  transform: translateY(5px);
+  animation: logIn 0.3s ease forwards;
+}
+
+@keyframes logIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+.loader-screen.launch {
+  animation: loaderExit 0.9s ease forwards;
+}
+
+@keyframes loaderExit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    transform: translateY(-20px) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-200px) scale(0.8);
+  }
+}
