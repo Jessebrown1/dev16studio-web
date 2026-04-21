@@ -82,3 +82,22 @@
     transform: translateY(-200px) scale(0.8);
   }
 }
+
+
+.loader-screen.launch {
+  animation: loaderExit 0.9s ease forwards;
+}
+
+@keyframes loaderExit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  40% {
+    transform: translateY(-20px) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-200px) scale(0.8);
+  }
+}
