@@ -18,7 +18,7 @@
   align-items: center;
   gap: 24px;
   height: 72px;
-  padding-inline: clamp(16px, 2.4vw, 36px);
+  padding-inline: max(clamp(16px, 2.4vw, 36px), env(safe-area-inset-left)) max(clamp(16px, 2.4vw, 36px), env(safe-area-inset-right));
 }
 
 .brand {
@@ -136,7 +136,11 @@
 /* ---------- full-screen mobile menu ---------- */
 .menu {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh;
   z-index: 55;
   overflow-y: auto;
   background:
@@ -150,7 +154,7 @@
   flex-direction: column;
   min-height: 100%;
   min-height: 100svh;
-  padding: 84px 0 24px;
+  padding: 84px 0 calc(24px + env(safe-area-inset-bottom));
 }
 
 .menu-label {

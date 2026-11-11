@@ -3,16 +3,15 @@ import "./Loader.css";
 
 /**
  * Intro shown on every load:
- *  1. a gold ring draws around the logo           (in)
- *  2. a glowing seam sweeps across the middle      (seam)
- *  3. the screen splits open along the seam        (out)
+ *  1. a gold ring draws around the logo                       (in)
+ *  2. the ring becomes a circular window that expands outward,
+ *     with a glowing gold rim, revealing the site behind it    (open)
  */
-const SEAM_AT = 1000;
-const SPLIT_AT = 1400;
-const DONE_AFTER = 1000;
+const OPEN_AT = 1050;
+const DONE_AFTER = 1250;
 
 export default function Loader({ onReveal }) {
-  const [phase, setPhase] = useState("in"); // in → seam → out → done
+  const [phase, setPhase] = useState("in"); // in → open → done
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -24,16 +23,14 @@ export default function Loader({ onReveal }) {
       return () => clearTimeout(t);
     }
 
-    const t1 = setTimeout(() => setPhase("seam"), SEAM_AT);
-    const t2 = setTimeout(() => {
-      setPhase("out");
+    const t1 = setTimeout(() => {
+      setPhase("open");
       onReveal();
-    }, SPLIT_AT);
-    const t3 = setTimeout(() => setPhase("done"), SPLIT_AT + DONE_AFTER);
+    }, OPEN_AT);
+    const t2 = setTimeout(() => setPhase("done"), OPEN_AT + DONE_AFTER);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      clearTimeout(t3);
     };
   }, [onReveal]);
 
@@ -41,9 +38,8 @@ export default function Loader({ onReveal }) {
 
   return (
     <div className={`loader is-${phase}`} aria-hidden="true">
-      <div className="loader-half is-top" />
-      <div className="loader-half is-bottom" />
-      <div className="loader-seam" />
+      {/* A circle whose huge shadow covers the screen; growing the circle opens a window onto the site */}
+      <div className="loader-iris" />
 
       <div className="loader-core">
         <div className="loader-ring">

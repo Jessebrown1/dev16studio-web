@@ -1,6 +1,10 @@
 .bg-layer {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100lvh; /* extends behind iOS Safari's bottom bar */
   z-index: 0;
   pointer-events: none;
 }

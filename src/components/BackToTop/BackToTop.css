@@ -1,7 +1,7 @@
 .to-top {
   position: fixed;
-  right: 20px;
-  bottom: 20px;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: calc(20px + env(safe-area-inset-bottom));
   z-index: 40;
   display: grid;
   place-items: center;
