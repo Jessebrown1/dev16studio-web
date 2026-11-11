@@ -1,52 +1,49 @@
 import { useEffect, useState } from "react";
 import "./Loader.css";
 
-const SEEN_KEY = "dev16-intro-seen";
-
-function hasSeenIntro() {
-  try {
-    return sessionStorage.getItem(SEEN_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
-
 /**
- * Fast intro: a ring draws around the logo, then the screen splits open.
- * Repeat visits in the same session just get a quick fade.
+ * Intro shown on every load:
+ *  1. a gold ring draws around the logo           (in)
+ *  2. a glowing seam sweeps across the middle      (seam)
+ *  3. the screen splits open along the seam        (out)
  */
+const SEAM_AT = 1000;
+const SPLIT_AT = 1400;
+const DONE_AFTER = 1000;
+
 export default function Loader({ onReveal }) {
-  const [quick] = useState(hasSeenIntro);
-  const [phase, setPhase] = useState("in"); // in → out → done
+  const [phase, setPhase] = useState("in"); // in → seam → out → done
 
   useEffect(() => {
-    try {
-      sessionStorage.setItem(SEEN_KEY, "1");
-    } catch {
-      /* storage unavailable: always show the full intro */
-    }
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const hold = quick || reduce ? 120 : 950;
-    const t1 = setTimeout(() => {
+    if (reduce) {
+      const t = setTimeout(() => {
+        setPhase("done");
+        onReveal();
+      }, 150);
+      return () => clearTimeout(t);
+    }
+
+    const t1 = setTimeout(() => setPhase("seam"), SEAM_AT);
+    const t2 = setTimeout(() => {
       setPhase("out");
       onReveal();
-    }, hold);
-    const t2 = setTimeout(() => setPhase("done"), hold + 850);
+    }, SPLIT_AT);
+    const t3 = setTimeout(() => setPhase("done"), SPLIT_AT + DONE_AFTER);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
+      clearTimeout(t3);
     };
-  }, [onReveal, quick]);
+  }, [onReveal]);
 
   if (phase === "done") return null;
 
   return (
-    <div
-      className={`loader ${phase === "out" ? "is-out" : ""} ${quick ? "is-quick" : ""}`}
-      aria-hidden="true"
-    >
+    <div className={`loader is-${phase}`} aria-hidden="true">
       <div className="loader-half is-top" />
       <div className="loader-half is-bottom" />
+      <div className="loader-seam" />
 
       <div className="loader-core">
         <div className="loader-ring">

@@ -10,45 +10,78 @@
   pointer-events: none;
 }
 
-/* the two panels that split apart */
+/* ---------- the two panels that split apart ---------- */
 .loader-half {
   position: absolute;
   left: 0;
   right: 0;
   height: 50.5%;
-  background: #0b0806;
-  transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+  background:
+    radial-gradient(ellipse 60% 90% at 50% 100%, rgba(240, 160, 75, 0.08), transparent 70%),
+    #0b0806;
+  transition: transform 0.95s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .loader-half.is-top {
   top: 0;
-  border-bottom: 1px solid rgba(240, 160, 75, 0);
 }
 
 .loader-half.is-bottom {
   bottom: 0;
+  background:
+    radial-gradient(ellipse 60% 90% at 50% 0%, rgba(240, 160, 75, 0.08), transparent 70%),
+    #0b0806;
 }
 
-.loader.is-out .loader-half.is-top { transform: translateY(-100%); }
-.loader.is-out .loader-half.is-bottom { transform: translateY(100%); }
+.loader.is-out .loader-half.is-top { transform: translateY(-101%); }
+.loader.is-out .loader-half.is-bottom { transform: translateY(101%); }
 
-/* repeat visits: no split, just a quick fade */
-.loader.is-quick .loader-half { transition: opacity 0.35s ease; }
-.loader.is-quick.is-out .loader-half { transform: none; opacity: 0; }
-.loader.is-quick .loader-core { display: none; }
+/* ---------- glowing seam that sweeps across, then the screen opens along it ---------- */
+.loader-seam {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  margin-top: -0.5px;
+  background: linear-gradient(90deg, transparent, var(--accent-strong) 20%, #fff3e0 50%, var(--accent-strong) 80%, transparent);
+  box-shadow: 0 0 18px 2px rgba(240, 160, 75, 0.55), 0 0 60px 6px rgba(240, 160, 75, 0.25);
+  transform: scaleX(0);
+  opacity: 0;
+  transition: transform 0.45s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.3s;
+}
 
+.loader.is-seam .loader-seam {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+.loader.is-out .loader-seam {
+  transform: scaleX(1) scaleY(6);
+  opacity: 0;
+  transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+}
+
+/* ---------- logo + ring ---------- */
 .loader-core {
   position: relative;
+  z-index: 2;
   display: grid;
   justify-items: center;
   gap: 18px;
-  animation: loaderIn 0.5s var(--ease) both;
-  transition: opacity 0.3s, transform 0.4s var(--ease);
+  animation: loaderIn 0.6s var(--ease) both;
+  transition: opacity 0.4s, transform 0.5s var(--ease), filter 0.4s;
+}
+
+/* lifts away just before the split so the seam passes behind clean space */
+.loader.is-seam .loader-core {
+  opacity: 0;
+  transform: translateY(-14px) scale(0.96);
+  filter: blur(4px);
 }
 
 .loader.is-out .loader-core {
   opacity: 0;
-  transform: scale(0.92);
 }
 
 .loader-ring {
@@ -79,7 +112,7 @@
   stroke-linecap: round;
   stroke-dasharray: 289;
   stroke-dashoffset: 289;
-  animation: ringDraw 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.05s forwards;
+  animation: ringDraw 0.85s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
   filter: drop-shadow(0 0 6px rgba(240, 160, 75, 0.6));
 }
 
@@ -87,6 +120,7 @@
   width: 40px;
   height: 40px;
   object-fit: contain;
+  animation: logoPulse 0.6s var(--ease) 0.9s both;
 }
 
 .loader-name {
@@ -105,6 +139,12 @@
 
 @keyframes ringDraw {
   to { stroke-dashoffset: 0; }
+}
+
+@keyframes logoPulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(240, 160, 75, 0)); }
+  50% { transform: scale(1.12); filter: drop-shadow(0 0 14px rgba(240, 160, 75, 0.7)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(240, 160, 75, 0)); }
 }
 
 @keyframes loaderIn {
