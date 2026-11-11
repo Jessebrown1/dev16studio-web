@@ -1,0 +1,31 @@
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100lvh; /* avoids resizing when mobile browser bars show/hide */
+  display: block;
+}
+
+.bg-veil {
+  position: absolute;
+  inset: 0;
+  background: #0b0806;
+  opacity: 0.1;
+  will-change: opacity;
+}
+
+.bg-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 40%, transparent 55%, rgba(8, 6, 4, 0.7) 100%);
+}

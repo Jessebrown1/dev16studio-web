@@ -1,0 +1,85 @@
+.footer {
+  border-top: 1px solid var(--line);
+  background: rgba(8, 6, 4, 0.6);
+  padding: 56px 0 32px;
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+.footer-brand {
+  display: grid;
+  gap: 12px;
+}
+
+.footer-brand .brand {
+  margin-right: 0;
+}
+
+.footer-brand p {
+  color: var(--text-faint);
+  font-size: 0.93rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+}
+
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.93rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--text);
+}
+
+.footer-word-wrap {
+  overflow: hidden;
+  padding: 0 var(--gutter);
+}
+
+.footer-word {
+  font-size: clamp(3rem, 12vw, 9.5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  text-align: center;
+  white-space: nowrap;
+  padding-bottom: 0.08em;
+  background: linear-gradient(180deg, rgba(245, 239, 232, 0.22), rgba(245, 239, 232, 0.02));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.footer-word em {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, rgba(255, 187, 110, 0.5), rgba(255, 187, 110, 0.04));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 24px;
+  padding-right: 64px; /* keep clear of the back-to-top button */
+  border-top: 1px solid var(--line);
+  font-size: 0.84rem;
+  color: var(--text-faint);
+}

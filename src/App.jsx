@@ -1,81 +1,56 @@
-import React, { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { MotionConfig } from "framer-motion";
 
+import ShaderBackground from "./components/Background/ShaderBackground";
+import Loader from "./components/Loader/Loader";
 import Navbar from "./components/Navbar/Navbar";
 import Hero from "./components/Hero/Hero";
+import Work from "./components/Work/Work";
 import Services from "./components/Services/Services";
-import Portfolio from "./components/Portfolio/Portfolio";
-import Contact from "./components/Contact/Contact";
-import HowItWorks from "./components/HowItWorks/HowItWorks";
+import Process from "./components/Process/Process";
+import About from "./components/About/About";
 import Testimonials from "./components/Testimonials/Testimonials";
-import ScrollRocket from "./components/ScrollRocket/ScrollRocket";
+import Contact from "./components/Contact/Contact";
+import Footer from "./components/Footer/Footer";
+import BackToTop from "./components/BackToTop/BackToTop";
+import { initSmoothScroll, lockScroll } from "./lib/smoothScroll";
 
-import Loader from "./components/Loader/Loader";
-import ScrollSystem from "./components/ScrollSystem/ScrollSystem";
+export default function App() {
+  const [ready, setReady] = useState(false);
+  const handleReveal = useCallback(() => setReady(true), []);
 
-import "./index.css";
+  // Always start at the top behind the intro, with smooth scrolling on
+  useEffect(() => {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+    return initSmoothScroll();
+  }, []);
 
-function App() {
-  const [loading, setLoading] = useState(true);
+  // Keep the page still while the startup screen plays
+  useEffect(() => {
+    lockScroll(!ready);
+  }, [ready]);
 
   return (
-    <div className="main-container">
+    <MotionConfig reducedMotion="user">
+      <ShaderBackground />
+      <Loader onReveal={handleReveal} />
 
-      {/* 🚀 LOADER (BOOT SCREEN) */}
-      {loading && (
-        <Loader onFinish={() => setLoading(false)} />
-      )}
+      <Navbar ready={ready} />
+      <div className="site">
+        <main>
+          <Hero ready={ready} />
+          <Work />
+          <Services />
+          <Process />
+          <About />
+          <Testimonials />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
 
-      {/* MAIN APP (after loading) */}
-      {!loading && (
-        <>
-          {/* 📊 SCROLL PROGRESS SYSTEM */}
-          <ScrollSystem />
-
-          {/* Navbar */}
-          <Navbar />
-
-          {/* Scroll Container */}
-          <div className="scroll-container">
-
-            {/* Hero */}
-            <section id="home" className="snap-section">
-              <Hero />
-            </section>
-
-            {/* Services */}
-            <section id="services" className="snap-section">
-              <Services />
-            </section>
-
-            {/* How It Works */}
-            <section id="HowItWorks" className="snap-section">
-              <HowItWorks />
-            </section>
-
-            {/* Portfolio */}
-            <section id="portfolio" className="snap-section">
-              <Portfolio />
-            </section>
-
-            {/* Testimonials */}
-            <section id="testimonials" className="snap-section">
-              <Testimonials />
-            </section>
-
-            {/* Contact */}
-            <section id="contact" className="snap-section">
-              <Contact />
-            </section>
-
-          </div>
-
-          {/* 🚀 Rocket Scroll Button */}
-          <ScrollRocket />
-        </>
-      )}
-
-    </div>
+      <BackToTop />
+    </MotionConfig>
   );
 }
-
-export default App;

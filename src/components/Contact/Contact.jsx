@@ -1,58 +1,59 @@
-import React from "react";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Mail } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import SplitReveal from "../ui/SplitReveal";
+import Magnetic from "../ui/Magnetic";
+import { SITE, whatsappLink } from "../../data/site";
+import { EASE_OUT } from "../../lib/motion";
 import "./Contact.css";
-import { motion } from "framer-motion";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
+const fade = (delay) => ({
+  initial: { opacity: 0, y: 20 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.6 },
+  transition: { duration: 0.9, ease: EASE_OUT, delay },
+});
 
-const Contact = () => {
+export default function Contact() {
+  const reduce = useReducedMotion();
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [reduce ? 1 : 0.88, 1]);
+  const glow = useTransform(scrollYProgress, [0.4, 1], [0, 1]);
+
   return (
-    <section className="contact">
-      <motion.div
-        className="contact-container"
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-      >
-        <h2 className="contact-title">
-          Ready to Build Your Website?
-        </h2>
+    <section id="contact" className="section contact">
+      <div className="container">
+        <motion.div ref={ref} className="contact-panel" style={{ scale }}>
+          <motion.div className="contact-glow" style={{ opacity: glow }} aria-hidden="true" />
+          <motion.span className="eyebrow" {...fade(0)}>
+            Contact
+          </motion.span>
+          <SplitReveal text="Have a project in mind? *Let's build it.*" className="contact-title" stagger={0.07} />
+          <motion.p className="contact-intro" {...fade(0.35)}>
+            Tell me a little about your business and what you need. I&rsquo;ll get back to you
+            with honest advice and the clearest next step.
+          </motion.p>
 
-        <p className="contact-subtitle">
-          Let’s create something modern, fast, and designed to convert your visitors into customers.
-        </p>
+          <motion.div className="contact-actions" {...fade(0.5)}>
+            <Magnetic className="contact-btn">
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
+                <FaWhatsapp size={18} /> Chat on WhatsApp
+              </a>
+            </Magnetic>
+            <Magnetic className="contact-btn">
+              <a href={`mailto:${SITE.email}`} className="btn btn-ghost btn-lg">
+                <Mail size={18} /> Send an email
+              </a>
+            </Magnetic>
+          </motion.div>
 
-        <div className="contact-buttons">
-
-          <a
-            href="https://wa.me/233552384351?text=Hi%20I%20want%20a%20website"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn primary"
-          >
-            💬 Chat on WhatsApp
-          </a>
-
-          <a
-            href="mailto:youremail@gmail.com"
-            className="btn secondary"
-          >
-            📧 Send an Email
-          </a>
-
-        </div>
-
-
-      </motion.div>
+          <motion.p className="contact-direct" {...fade(0.6)}>
+            Or write directly to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          </motion.p>
+        </motion.div>
+      </div>
     </section>
   );
-};
-
-export default Contact;
+}

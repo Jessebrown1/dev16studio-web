@@ -1,91 +1,94 @@
-import React, { useRef } from "react";
-import "./Services.css";
 import { motion } from "framer-motion";
-import { FaCode, FaShoppingCart, FaRocket, FaMobileAlt } from "react-icons/fa";
+import { LayoutTemplate, ShoppingBag, MousePointerClick, Gauge, Check } from "lucide-react";
+import SectionHeader from "../ui/SectionHeader";
+import { EASE_OUT } from "../../lib/motion";
+import "./Services.css";
 
-const services = [
+const SERVICES = [
   {
-    icon: <FaCode />,
-    title: "Custom Development",
-    desc: "Precision-built websites engineered for performance, scalability, and a refined digital presence.",
+    icon: LayoutTemplate,
+    title: "Business websites",
+    desc: "Custom-designed, multi-page sites that explain what you do, build credibility and make it easy to get in touch.",
+    points: ["Custom design, no templates", "WhatsApp & contact integration", "Easy-to-update content"],
   },
   {
-    icon: <FaShoppingCart />,
-    title: "E-Commerce",
-    desc: "High-converting online stores designed to elevate user experience and maximize revenue.",
+    icon: ShoppingBag,
+    title: "Online stores",
+    desc: "E-commerce experiences that present your products beautifully and make buying simple on any device.",
+    points: ["Product catalogue & cart", "Payment integration", "Order-focused checkout"],
   },
   {
-    icon: <FaRocket />,
-    title: "Performance Optimization",
-    desc: "Speed, SEO, and technical enhancements that position your brand ahead of the competition.",
+    icon: MousePointerClick,
+    title: "Landing pages",
+    desc: "Focused single pages for a launch, offer or campaign, structured to turn attention into enquiries.",
+    points: ["Conversion-led structure", "Lead capture forms", "Built for ads & social traffic"],
   },
   {
-    icon: <FaMobileAlt />,
-    title: "Responsive Experience",
-    desc: "Seamless cross-device design ensuring consistency across all screen sizes.",
+    icon: Gauge,
+    title: "Speed & SEO",
+    desc: "Technical improvements that help your site load fast, rank better and keep visitors from bouncing.",
+    points: ["Performance tuning", "On-page SEO setup", "Analytics & tracking"],
   },
 ];
 
-const Services = () => {
-  const cardRefs = useRef([]);
-
-  const handleMouseMove = (e, index) => {
-    const card = cardRefs.current[index];
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    card.style.setProperty("--x", `${x}px`);
-    card.style.setProperty("--y", `${y}px`);
-  };
-
-  return (
-    <section className="services-section">
-      <div className="services-container">
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="services-header"
-        >
-          <h2>Crafted for Impact</h2>
-          <p>
-            I design and build digital experiences that combine elegance,
-            performance, and conversion-driven strategy.
-          </p>
-        </motion.div>
-
-        {/* Grid */}
-        <div className="services-grid">
-          {services.map((service, index) => (
-            <motion.div
-              key={index}
-              ref={(el) => (cardRefs.current[index] = el)}
-              onMouseMove={(e) => handleMouseMove(e, index)}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="service-card"
-            >
-              <div className="card-overlay" />
-
-              <div className="card-content">
-                <div className="icon">{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.desc}</p>
-              </div>
-
-              <div className="card-line" />
-            </motion.div>
-          ))}
-        </div>
-
-      </div>
-
-    </section>
-  );
+// Spotlight that follows the mouse across a card
+const trackSpotlight = (e) => {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
 };
 
-export default Services;
+export default function Services() {
+  return (
+    <section id="services" className="section services">
+      <div className="container services-layout">
+        <div className="services-aside">
+          <SectionHeader
+            eyebrow="Services"
+            title="What I can *build* for you."
+            intro="Every project is designed and developed from scratch around your business, your customers and what you need the website to achieve."
+          />
+        </div>
+
+        <div className="services-list">
+          {SERVICES.map(({ icon, title, desc, points }, i) => {
+            const Icon = icon;
+            return (
+            <motion.article
+              key={title}
+              className="service-card card"
+              onMouseMove={trackSpotlight}
+              initial={{ opacity: 0, y: 60, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1, ease: EASE_OUT }}
+            >
+              <div className="service-top">
+                <span className="service-icon">
+                  <Icon size={22} strokeWidth={1.6} />
+                </span>
+                <span className="service-num">0{i + 1}</span>
+              </div>
+              <h3>{title}</h3>
+              <p>{desc}</p>
+              <ul className="service-points">
+                {points.map((pt, j) => (
+                  <motion.li
+                    key={pt}
+                    initial={{ opacity: 0, x: -12 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.7, ease: EASE_OUT, delay: 0.3 + j * 0.08 }}
+                  >
+                    <Check size={15} strokeWidth={2.2} /> {pt}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}

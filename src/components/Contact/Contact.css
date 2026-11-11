@@ -1,93 +1,84 @@
-/* Section */
-.contact {
-  background: #140d12;
-  color: white;
-  padding: 120px 20px;
+.contact-panel {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  padding: clamp(48px, 8vw, 96px) clamp(20px, 5vw, 64px);
+  border: 1px solid var(--line-strong);
+  border-radius: 28px;
+  background:
+    radial-gradient(ellipse 80% 70% at 50% 0%, rgba(240, 160, 75, 0.16), transparent 70%),
+    var(--surface);
   text-align: center;
+  overflow: hidden;
 }
 
-/* Container */
-.contact-container {
-  max-width: 800px;
-  margin: auto;
+.contact-panel > * {
+  position: relative;
 }
 
-/* Title */
+.contact-panel > .contact-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 50% 110%, rgba(240, 160, 75, 0.28), transparent 70%);
+  pointer-events: none;
+}
+
 .contact-title {
-  font-size: 2.8rem;
-  font-weight: 800;
-  margin-bottom: 15px;
+  max-width: 16ch;
+  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
 }
 
-/* Subtitle */
-.contact-subtitle {
-  font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 40px;
-  line-height: 1.6;
+.contact-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--accent-strong);
 }
 
-/* Buttons */
-.contact-buttons {
+.contact-intro {
+  max-width: 52ch;
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.contact-actions {
   display: flex;
-  justify-content: center;
-  gap: 20px;
   flex-wrap: wrap;
-  margin-bottom: 20px;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-/* Button base */
-.btn {
-  padding: 14px 28px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 1.1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  display: inline-block;
-}
-
-/* Primary (WhatsApp) */
-.btn.primary {
-  background: linear-gradient(to right, #25D366, #128C7E);
-  color: white;
-}
-
-.btn.primary:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
-}
-
-/* Secondary (Email) */
-.btn.secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.btn.secondary:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* Note */
-.contact-note {
+.contact-direct {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--text-faint);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .contact-title {
-    font-size: 2rem;
-  }
+.contact-direct a {
+  color: var(--text-muted);
+  text-underline-offset: 3px;
+  text-decoration-color: var(--line-strong);
+  transition: color 0.2s;
+}
 
-  .contact-subtitle {
-    font-size: 1rem;
-  }
+.contact-direct a:hover {
+  color: var(--accent-strong);
+}
 
-  .btn {
+@media (max-width: 520px) {
+  .contact-actions {
     width: 100%;
-    text-align: center;
+  }
+  .contact-btn,
+  .contact-btn .btn {
+    width: 100%;
   }
 }

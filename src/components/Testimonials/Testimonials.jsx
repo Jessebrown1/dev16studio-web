@@ -1,26 +1,10 @@
-import React from "react";
-import "./Testimonials.css";
 import { motion } from "framer-motion";
+import { Quote } from "lucide-react";
+import SectionHeader from "../ui/SectionHeader";
+import { EASE_OUT } from "../../lib/motion";
+import "./Testimonials.css";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: "easeOut" },
-  },
-};
-
-const stagger = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.25,
-    },
-  },
-};
-
-const testimonials = [
+const TESTIMONIALS = [
   {
     name: "Kwame Mensah",
     role: "Business Owner",
@@ -38,62 +22,39 @@ const testimonials = [
   },
 ];
 
-const Testimonials = () => {
+const TILT = [-3, 0, 3];
+
+export default function Testimonials() {
   return (
-    <section className="testimonials">
-      <div className="testimonials-container">
+    <section id="testimonials" className="section testimonials">
+      <div className="container">
+        <SectionHeader center eyebrow="Client words" title="Trusted by owners who *care about quality*." />
 
-        {/* Header */}
-        <motion.div
-          className="testimonials-header"
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          <h2>What Clients Say</h2>
-          <p>Trusted by businesses who value quality and results.</p>
-        </motion.div>
-
-        {/* Cards */}
-        <motion.div
-          className="testimonials-grid"
-          variants={stagger}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {testimonials.map((item, index) => (
-            <motion.div
-              className="testimonial-card"
-              key={index}
-              variants={fadeUp}
+        <div className="testimonials-grid">
+          {TESTIMONIALS.map((t, i) => (
+            <motion.figure
+              key={t.name}
+              className="testimonial card"
+              initial={{ opacity: 0, y: 80, rotate: TILT[i] }}
+              whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.1, ease: EASE_OUT, delay: i * 0.12 }}
             >
-              <p className="testimonial-text">“{item.text}”</p>
-
-              <div className="testimonial-user">
-                <div className="avatar">{item.name.charAt(0)}</div>
-                <div>
-                  <h4>{item.name}</h4>
-                  <span>{item.role}</span>
-                </div>
-              </div>
-            </motion.div>
+              <Quote size={26} className="testimonial-mark" strokeWidth={1.5} />
+              <blockquote>{t.text}</blockquote>
+              <figcaption>
+                <span className="avatar" aria-hidden="true">
+                  {t.name.charAt(0)}
+                </span>
+                <span>
+                  <span className="t-name">{t.name}</span>
+                  <span className="t-role">{t.role}</span>
+                </span>
+              </figcaption>
+            </motion.figure>
           ))}
-        </motion.div>
-
-
-
-
-
-
+        </div>
       </div>
     </section>
-
-
-
-
   );
-};
-
-export default Testimonials;
+}

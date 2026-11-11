@@ -1,142 +1,130 @@
-import React, { useRef, useEffect } from "react";
-import "./Hero.css"; // Plain CSS
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { ArrowUpRight, MapPin } from "lucide-react";
+import Magnetic from "../ui/Magnetic";
+import { EASE_OUT } from "../../lib/motion";
+import { handleAnchor } from "../../lib/smoothScroll";
+import { SITE } from "../../data/site";
+import "./Hero.css";
 
-const defaultShaderSource = `#version 300 es
-precision highp float;
-out vec4 O;
-uniform vec2 resolution;
-uniform float time;
-#define FC gl_FragCoord.xy
-#define MN min(resolution.x,resolution.y)
-float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
-float noise(in vec2 p){vec2 i=floor(p), f=fract(p), u=f*f*(3.-2.*f);float a=rnd(i),b=rnd(i+vec2(1,0)),c=rnd(i+vec2(0,1)),d=rnd(i+1.);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
-float fbm(vec2 p){float t=0., a=1.; mat2 m=mat2(1.,-.5,.2,1.2); for(int i=0;i<5;i++){t+=a*noise(p);p*=2.*m;a*=.5;} return t;}
-float clouds(vec2 p){float d=1., t=0.;for(float i=0.; i<3.; i++){float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p); t=mix(t,d,a); d=a; p*=2./(i+1.); } return t;}
-void main(){ 
-  vec2 uv=(FC-0.5*resolution)/MN; vec3 col=vec3(0); 
-  float bg=clouds(vec2(uv.x+time*0.5,-uv.y)); 
-  uv*=1.-0.3*(sin(time*0.2)*0.5+0.5); 
-  for(float i=1.; i<12.; i++){ 
-    uv+=.1*cos(i*vec2(.1+.01*i, .8)+i*i+time*0.5+.1*uv.x); 
-    vec2 p=uv; 
-    float d=length(p); 
-    col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.); 
-    float b=noise(i+p+bg*1.731); 
-    col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y))); 
-    col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d); 
-  } 
-  O=vec4(col,1.); 
-}`;
+const WORDS = ["customers.", "bookings.", "trust.", "growth."];
 
-const Hero = () => {
-  const canvasRef = useRef(null);
-  const requestRef = useRef();
+function RotatingWord({ play }) {
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const gl = canvas.getContext("webgl2");
-    if (!gl) return;
-
-    const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      gl.viewport(0, 0, canvas.width, canvas.height);
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const compileShader = (source, type) => {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error(gl.getShaderInfoLog(shader));
-      }
-      return shader;
-    };
-
-    const vsSource = `#version 300 es
-    in vec4 position;
-    void main(){ gl_Position=position; }`;
-    const vertexShader = compileShader(vsSource, gl.VERTEX_SHADER);
-    const fragmentShader = compileShader(defaultShaderSource, gl.FRAGMENT_SHADER);
-
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error(gl.getProgramInfoLog(program));
-    }
-    gl.useProgram(program);
-
-    const vertices = new Float32Array([-1,1, -1,-1, 1,1, 1,-1]);
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
-
-    const position = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(position);
-    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-    const resolutionLoc = gl.getUniformLocation(program, "resolution");
-    const timeLoc = gl.getUniformLocation(program, "time");
-
-    const render = (time) => {
-      gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
-      gl.uniform1f(timeLoc, time * 0.001);
-      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-      requestRef.current = requestAnimationFrame(render);
-    };
-    render(0);
-
-    return () => {
-      cancelAnimationFrame(requestRef.current);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
+    if (!play) return;
+    const id = setInterval(() => setIndex((n) => (n + 1) % WORDS.length), 2600);
+    return () => clearInterval(id);
+  }, [play]);
 
   return (
-    <div className="hero">
-      <canvas ref={canvasRef} className="hero-canvas" />
-
-<div className="hero-content">
-  {/* Trust Badge / Social Proof */}
-  
-  <h1 className="hero-title">
-    <span>Grow</span> <span>Your</span> <span>Brand</span>
-  </h1>
-  <h2 className="hero-subtitle">
-    Designs That Sell
-  </h2>
-  <p className="hero-description">
-    We craft visually stunning websites that not only look amazing but turn visitors into loyal customers.
-  </p>
-<div className="hero-buttons">
-  <button
-    className="btn-primary"
-    onClick={() => {
-      document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
-    }}
-  >
-    Start Your Project
-  </button>
-
-  <button
-    className="btn-secondary"
-    onClick={() => {
-      document.getElementById("portfolio").scrollIntoView({ behavior: "smooth" });
-    }}
-  >
-    See Our Work
-  </button>
-</div>
-</div>
-    </div>
-
-    
+    <span className="rotator">
+      <AnimatePresence initial={false}>
+        <motion.span
+          key={WORDS[index]}
+          className="rotator-word"
+          initial={{ y: "110%", rotate: 4 }}
+          animate={{ y: "0%", rotate: 0 }}
+          exit={{ y: "-110%", rotate: -4 }}
+          transition={{ duration: 0.9, ease: EASE_OUT }}
+        >
+          {WORDS[index]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
   );
-};
+}
 
-export default Hero;
+function Line({ children, index, play }) {
+  return (
+    <span className="line">
+      <motion.span
+        className="line-inner"
+        initial={{ y: "115%" }}
+        animate={{ y: play ? "0%" : "115%" }}
+        transition={{ duration: 1.2, ease: EASE_OUT, delay: 0.2 + index * 0.1 }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
+
+export default function Hero({ ready }) {
+  const reduce = useReducedMotion();
+  const heroRef = useRef(null);
+
+  // Scroll-out: the copy drifts down, shrinks slightly and fades
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : 180]);
+  const copyScale = useTransform(scrollYProgress, [0, 1], [1, reduce ? 1 : 0.94]);
+  const copyOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+
+  const fade = (delay) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: ready ? { opacity: 1, y: 0 } : undefined,
+    transition: { duration: 1, ease: EASE_OUT, delay },
+  });
+
+  return (
+    <section id="top" ref={heroRef} className="hero">
+      <div className="container hero-main">
+        <motion.div className="hero-copy" style={{ y: copyY, scale: copyScale, opacity: copyOpacity }}>
+          <h1 className="hero-title" aria-label="Websites that win you more customers">
+            <span aria-hidden="true">
+              <Line index={0} play={ready}>
+                Websites that win
+              </Line>
+              <Line index={1} play={ready}>
+                you more <RotatingWord play={ready} />
+              </Line>
+            </span>
+          </h1>
+
+          <motion.p className="hero-lede" {...fade(0.55)}>
+            Dev16 Studio designs and builds fast, modern websites for barbershops, restaurants,
+            real estate and growing brands, made to earn trust at first glance.
+          </motion.p>
+
+          <motion.div className="hero-actions" {...fade(0.68)}>
+            <Magnetic className="hero-btn">
+              <a href="#contact" onClick={handleAnchor} className="btn btn-primary btn-lg">
+                Start a project <ArrowUpRight size={18} className="icon-nudge" />
+              </a>
+            </Magnetic>
+            <Magnetic className="hero-btn">
+              <a href="#work" onClick={handleAnchor} className="btn btn-ghost btn-lg">
+                View my work
+              </a>
+            </Magnetic>
+          </motion.div>
+
+          <motion.div className="hero-proof" {...fade(0.82)}>
+            <div className="proof-avatars" aria-hidden="true">
+              <span>K</span>
+              <span>A</span>
+              <span>D</span>
+            </div>
+            <p>
+              <strong>8+ businesses</strong> launched across 7 industries
+            </p>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      <motion.div className="container hero-bottom" {...fade(1)}>
+        <span className="hero-meta">
+          <MapPin size={15} /> {SITE.location}
+        </span>
+        <a href="#work" onClick={handleAnchor} className="hero-scroll" aria-label="Scroll to selected work">
+          <span className="scroll-track">
+            <span className="scroll-thumb" />
+          </span>
+          Scroll
+        </a>
+        <span className="hero-meta hero-meta-right">Web design &amp; development</span>
+      </motion.div>
+    </section>
+  );
+}
